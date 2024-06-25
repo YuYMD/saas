@@ -49,18 +49,24 @@ def reset_password():
             st.error(e)
 
 def send_email(subject, message, to_address):
-    from_address = os.getenv("YOUR_EMAIL")
-    password = os.getenv("YOUR_EMAIL_PASS")
+    from_address = os.environ["YOUR_EMAIL"]
+    password = os.environ["YOUR_EMAIL_PASS"]
+
     msg = MIMEMultipart()
-    msg['From'] = from_address
+    msg['From'] = f"SmartBids.ai - Email verification <{from_address}>"
     msg['To'] = to_address
     msg['Subject'] = subject
-    msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP_SSL('mail.privateemail.com', 465)
+    msg.attach(MIMEText(message, 'html'))
+
+    # Gmail SMTP設定
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.ehlo()
     server.login(from_address, password)
+    
     text = msg.as_string()
     server.sendmail(from_address, to_address, text)
     server.quit()
+
 
 
 def forgot_username():
