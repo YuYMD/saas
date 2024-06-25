@@ -382,32 +382,32 @@ class Authenticate:
         users = db['users']
         users.insert_one(user_credentials)
         client.close()
-        try:                    
-            # Add user to Octupus list
-            headers = {
-                'Content-Type': 'application/json',
-            }
-
-            # Check if OCTOPUS_KEY exists in environment variables
-            api_key = os.environ['OCTUPUS_KEY']
-            # Assuming email and name are previously defined
-            data = {
-                "api_key": api_key,
-                "email_address": email,
-                "fields": {"Name": name,
-                           "FirstName": name.split(' ')[0],
-                            "PostalCode": postal_code,
-                            "Needs": needs},
-                "tags": ["app"],
-                "status": "SUBSCRIBED"
-            }
-
-            response = requests.post('https://emailoctopus.com/api/1.6/lists/a7f14044-54c0-11ee-bed9-57e59232c7ed/contacts', headers=headers, data=json.dumps(data))
-
-            print(response.text)
-
-        except Exception as e:
-            print(e)
+#        try:                    
+#            # Add user to Octupus list
+#            headers = {
+#                'Content-Type': 'application/json',
+#            }
+#
+#            # Check if OCTOPUS_KEY exists in environment variables
+#            api_key = os.environ['OCTUPUS_KEY']
+#            # Assuming email and name are previously defined
+#            data = {
+#                "api_key": api_key,
+#                "email_address": email,
+#                "fields": {"Name": name,
+#                           "FirstName": name.split(' ')[0],
+#                            "PostalCode": postal_code,
+#                            "Needs": needs},
+#                "tags": ["app"],
+#                "status": "SUBSCRIBED"
+#            }
+#
+#            response = requests.post('https://emailoctopus.com/api/1.6/lists/a7f14044-54c0-11ee-bed9-57e59232c7ed/contacts', headers=headers, data=json.dumps(data))
+#
+#            print(response.text)
+#
+#        except Exception as e:
+#            print(e)
 
         # Call FastAPI email verification service after successfully adding to users and Octupus list
         verification_url = os.get_environ("VERIFICATION_URL")
