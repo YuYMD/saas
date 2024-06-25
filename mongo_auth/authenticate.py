@@ -29,7 +29,7 @@ class Authenticate:
         cookie_expiry_days: int
             The number of days before the cookie expires on the client's browser.
         """
-        self.mongo_uri = os.environ.get['MONGO_AUTH']
+        self.mongo_uri = os.environ.get('MONGO_AUTH')
         self.cookie_name = cookie_name
         self.key = key
         self.cookie_expiry_days = cookie_expiry_days
