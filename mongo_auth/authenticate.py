@@ -29,7 +29,7 @@ class Authenticate:
         cookie_expiry_days: int
             The number of days before the cookie expires on the client's browser.
         """
-        self.mongo_uri = os.environ['MONGO_AUTH']
+        self.mongo_uri = os.environ.get['MONGO_AUTH']
         self.cookie_name = cookie_name
         self.key = key
         self.cookie_expiry_days = cookie_expiry_days
@@ -410,7 +410,7 @@ class Authenticate:
 #            print(e)
 
         # Call FastAPI email verification service after successfully adding to users and Octupus list
-        verification_url = os.get_environ("VERIFICATION_URL")
+        verification_url = os.environ.get("VERIFICATION_URL")
         data = {'email': email, 'id': '123'}
         response = requests.post(verification_url, json=data)
         if response.status_code != 200:
